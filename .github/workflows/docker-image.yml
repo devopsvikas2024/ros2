@@ -18,14 +18,17 @@ jobs:
       IMAGE_TAG: ros2:$(date +%s)
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+     - name: Checkout Repository
+       uses: actions/checkout@v2
 
-    - name: Build the Docker image
-      run: |
-        docker build . --file Dockerfile --tag $IMAGE_TAG
-        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        docker push $IMAGE_TAG
+     - name: Set up Docker
+       uses: docker/setup-docker@v2
+       with:
+         dockerfile: Dockerfile
+         container_name: ros2
+
+      - name: Build Docker Image
+        run: docker build -t ros2:latest .
 
   deploy_with_terraform:
 
