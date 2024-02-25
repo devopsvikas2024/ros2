@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: vikasrk369
+      DOCKER_PASSWORD: Vicky@84245
       IMAGE_TAG: ros2:$(date +%s)
 
     steps:
