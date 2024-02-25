@@ -1,50 +1,39 @@
+---
 name: Docker Image CI
-
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-
+    branches:
+      - main
 jobs:
-
   build_and_push_docker_image:
-
     runs-on: ubuntu-latest
-
     env:
       DOCKER_USERNAME: vikasrk369
       DOCKER_PASSWORD: Vicky@84245
       IMAGE_TAG: ros2:$(date +%s)
-
     steps:
-     - name: Checkout Repository
-       uses: actions/checkout@v2
-
-     - name: Set up Docker
-       uses: docker/setup-docker@v2
-       with:
-         dockerfile: Dockerfile
-         container_name: ros2
-
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+        with:
+          dockerfile: Dockerfile
+          container_name: ros2
       - name: Build Docker Image
         run: docker build -t ros2:latest .
-
   deploy_with_terraform:
-
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: 0.14.7
-
-    - name: Initialize Terraform
-      run: terraform init
-
-    - name: Apply Terraform Changes
-      run: terraform apply -auto-approve
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+      - name: Initialize Terraform
+        run: terraform init
+      - name: Apply Terraform Changes
+        run: terraform apply -auto-approve
